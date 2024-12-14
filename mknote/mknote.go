@@ -3,8 +3,8 @@ package mknote
 
 import (
 	"bytes"
-	"github.com/rwcarlsen/goexif/exif"
-	"github.com/rwcarlsen/goexif/tiff"
+	"github.com/glycerine/goexif/exif"
+	"github.com/glycerine/goexif/tiff"
 )
 
 var (
