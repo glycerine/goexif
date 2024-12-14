@@ -1,2 +1,4 @@
-github.com/glycerine/goexif v0.0.0-20241214055022-453384b85720 h1:LtWC3E+5BkTXwY/8TGYwLzKL0w9TmRkNRgukG40dJFE=
-github.com/glycerine/goexif v0.0.0-20241214055022-453384b85720/go.mod h1:Ac8gKvlWLl2KhD84G08vb5fO5F82wHTxLxnZVOZGYV8=
+github.com/glycerine/goexif/mknote v0.0.0-20241214055430-ab2afecfa2bb h1:KIw2ImWEHZZHwo7zQKWcqMT/rqDMer7InLFNE+inboI=
+github.com/glycerine/goexif/mknote v0.0.0-20241214055430-ab2afecfa2bb/go.mod h1:Pbzemq62CR8Zwx9VYFkp0SsljRmpI+VWBLr8ZW2WwGo=
+github.com/glycerine/goexif/tiff v0.0.0-20241214055430-ab2afecfa2bb h1:pMR0HwswJyk9u29JHzZo7RAwnJEpyN3ihVWbXVPCZ9E=
+github.com/glycerine/goexif/tiff v0.0.0-20241214055430-ab2afecfa2bb/go.mod h1:8rp0tQAXWTUSiIplD0ZYPIFQbLGPSgb3cFjLcPoLs2E=
