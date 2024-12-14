@@ -179,7 +179,7 @@ func loadSubDir(x *Exif, ptr FieldName, fieldMap map[uint16]FieldName) error {
 // Exif provides access to decoded EXIF metadata fields and values.
 type Exif struct {
 	Tiff *tiff.Tiff
-	main map[FieldName]*tiff.Tag
+	Main map[FieldName]*tiff.Tag
 	Raw  []byte
 }
 
@@ -260,7 +260,7 @@ func Decode(r io.Reader) (*Exif, error) {
 
 	// build an exif structure from the tiff
 	x := &Exif{
-		main: map[FieldName]*tiff.Tag{},
+		Main: map[FieldName]*tiff.Tag{},
 		Tiff: tif,
 		Raw:  raw,
 	}
@@ -293,7 +293,7 @@ func (x *Exif) LoadTags(d *tiff.Dir, fieldMap map[uint16]FieldName, showMissing 
 			}
 			name = FieldName(fmt.Sprintf("%v%x", UnknownPrefix, tag.Id))
 		}
-		x.main[name] = tag
+		x.Main[name] = tag
 	}
 }
 
@@ -302,7 +302,7 @@ func (x *Exif) LoadTags(d *tiff.Dir, fieldMap map[uint16]FieldName, showMissing 
 // If the tag is not known or not present, an error is returned. If the
 // tag name is known, the error will be a TagNotPresentError.
 func (x *Exif) Get(name FieldName) (*tiff.Tag, error) {
-	if tg, ok := x.main[name]; ok {
+	if tg, ok := x.Main[name]; ok {
 		return tg, nil
 	}
 	return nil, TagNotPresentError(name)
@@ -318,7 +318,7 @@ type Walker interface {
 // Walk calls the Walk method of w with the name and tag for every non-nil
 // EXIF field.  If w aborts the walk with an error, that error is returned.
 func (x *Exif) Walk(w Walker) error {
-	for name, tag := range x.main {
+	for name, tag := range x.Main {
 		if err := w.Walk(name, tag); err != nil {
 			return err
 		}
@@ -361,12 +361,12 @@ func ratFloat(num, dem int64) float64 {
 // Tries to parse a Geo degrees value from a string as it was found in some
 // EXIF data.
 // Supported formats so far:
-// - "52,00000,50,00000,34,01180" ==> 52 deg 50'34.0118"
-//   Probably due to locale the comma is used as decimal mark as well as the
-//   separator of three floats (degrees, minutes, seconds)
-//   http://en.wikipedia.org/wiki/Decimal_mark#Hindu.E2.80.93Arabic_numeral_system
-// - "52.0,50.0,34.01180" ==> 52deg50'34.0118"
-// - "52,50,34.01180"     ==> 52deg50'34.0118"
+//   - "52,00000,50,00000,34,01180" ==> 52 deg 50'34.0118"
+//     Probably due to locale the comma is used as decimal mark as well as the
+//     separator of three floats (degrees, minutes, seconds)
+//     http://en.wikipedia.org/wiki/Decimal_mark#Hindu.E2.80.93Arabic_numeral_system
+//   - "52.0,50.0,34.01180" ==> 52deg50'34.0118"
+//   - "52,50,34.01180"     ==> 52deg50'34.0118"
 func parseTagDegreesString(s string) (float64, error) {
 	const unparsableErrorFmt = "Unknown coordinate format: %s"
 	isSplitRune := func(c rune) bool {
@@ -495,7 +495,7 @@ func (x *Exif) LatLong() (lat, long float64, err error) {
 // String returns a pretty text representation of the decoded exif data.
 func (x *Exif) String() string {
 	var buf bytes.Buffer
-	for name, tag := range x.main {
+	for name, tag := range x.Main {
 		fmt.Fprintf(&buf, "%s: %s\n", name, tag)
 	}
 	return buf.String()
@@ -528,7 +528,7 @@ func (x *Exif) JpegThumbnail() ([]byte, error) {
 // MarshalJson implements the encoding/json.Marshaler interface providing output of
 // all EXIF fields present (names and values).
 func (x Exif) MarshalJSON() ([]byte, error) {
-	return json.Marshal(x.main)
+	return json.Marshal(x.Main)
 }
 
 type appSec struct {
