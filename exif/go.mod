@@ -1,4 +1,4 @@
-module github.com/glycerine/goexif
+module github.com/glycerine/goexif/exif
 
 go 1.15
 
